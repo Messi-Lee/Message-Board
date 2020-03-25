@@ -29,6 +29,7 @@
             background: url("image/f603918fa0ec08fae3cc523353ee3d6d54fbda52.jpg") no-repeat;
             background-size: cover;
         }
+/*    每一条留言的样式      */
         .List{
             min-width: 200px;
             max-width: 300px;
@@ -43,17 +44,20 @@
 </head>
 <body>
 <div id="MessageBoard">
+<!--   留言板展示   -->
     <div id="board">
         <div v-for="item in list" draggable="false" class="List" :style="{top:item.yPos+'px',left:item.xPos+'px',backgroundColor:item.color}">
             <p>{{item.content}}</p>
         </div>
     </div>
+<!--   留言板写入提交   -->
     <div id="submit" align="center">
         <input type="text" v-model="inputValue">
         <button v-on:click="_handleBtnClick">提交</button>
     </div>
 </div>
 <script>
+//     每条留言的颜色可选数组
     var colorArr = ['#ccf0e1','#f8fab8','#f8fab8','#c2f0fc','#ccf0e1','#f3d1f4'];
     var MessageBoard = new Vue({
         el:"#MessageBoard",
@@ -62,9 +66,11 @@
             inputValue:"",
         },
         methods:{
+//             sumbit按钮绑定的click实现方法
             _handleBtnClick:function () {
                 if (this.inputValue !== ""){
                     let msg = {
+//                         每条留言的相关信息：content-内容；xPos-横坐标位置；yPos-竖坐标位置；color-背景颜色
                         content: this.inputValue,
                         xPos:this._randomPosition(0),
                         yPos:this._randomPosition(1),
@@ -74,6 +80,7 @@
                     this.inputValue = "";
                 }
             },
+//             以下两个方法都是给每条留言随机获取位置和颜色信息
             _randomPosition:function (num) {
                 if (num === 0){
                     return Math.random()*document.body.clientWidth*0.8;
